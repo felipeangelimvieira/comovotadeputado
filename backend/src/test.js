@@ -1,5 +1,7 @@
-const https = require('./https-promise')
-
-const url = 'https://www.camara.leg.br/SitCamaraWS/Proposicoes.asmx/ListarProposicoesVotadasEmPlenario?ano=2019&tipo=';
-
-console.log(https.get(url));
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/mydatabase"; // mydatabase is the name of db 
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+console.log("Database created!");
+  db.close();
+});
