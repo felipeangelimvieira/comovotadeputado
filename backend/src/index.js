@@ -11,5 +11,5 @@ async function getDataFromCongress() {
     var parsedPropositions = await propositions.get(2019)
     var parsedVotations = await votations.getVotationForPropositions(parsedPropositions);
     var parsedCongressmen = await congressmen.get();
-    console.log(parsedPropositions);
+    console.log(parsedCongressmen);
 }
