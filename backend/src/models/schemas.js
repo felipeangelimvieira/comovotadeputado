@@ -2,7 +2,9 @@
 
 votacao_schema = {
 
-    proposicao_id : Integer,
+    proposicao_tipo : String,
+    proposicao_ano : Integer,
+    proposicao_numero : Integer,
     votacoes : Array<Votacao>
 }
 

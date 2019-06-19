@@ -29,7 +29,7 @@ function getHttps(url,resolve, reject, retry = 0) {
             setTimeout(() => getHttps(url, resolve, reject, retry + 1), 2000);
         }
         else {
-            console.log(`Rejecting. Status code: ${res.statusCode}`)
+            console.log(`Rejecting url ${url}. Status code: ${res.statusCode}`)
             reject(res.statusCode)
         }
     });

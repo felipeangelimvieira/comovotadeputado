@@ -1,6 +1,5 @@
 const xml2js = require('xml2js');
-xmlParser = new xml2js.Parser();
-xmlParser.on('error', err => console.log('Parser error', err));
+const https = require('../https-promise')
 
 function parseData(data) {
 
@@ -9,7 +8,8 @@ function parseData(data) {
         de propriedades tipo, numero,
         ano, codigo e dataVotacao
     */
-
+    let xmlParser = new xml2js.Parser();
+    xmlParser.on('error', err => console.log('Parser error', err));
     return new Promise( function(resolve, reject) 
     {
     xmlParser.parseString(data, (err, result) => {
@@ -60,8 +60,47 @@ var getPropYear = function(proposicao) {
 }
 
 
+async function getDetailedInfo(codigo) {
+    
+    let xmlParser = new xml2js.Parser();
+    xmlParser.on('error', err => console.log('Parser error', err));
+    let url = 'https://www.camara.leg.br/SitCamaraWS/Proposicoes.asmx/ObterProposicaoPorID?IdProp=';
+    
+    url += codigo;
+
+    data = await https.get(url);
+
+    return new Promise(function(resolve, reject) {
+        xmlParser.parseString(data, (err, result) => {
+            if (err) {
+                reject(err);
+            }
+
+            result = result['proposicao']
+            final_obj = {
+                tipo : result['$'].tipo.replace(/ /g,''),
+                ano : parseInt(result['$'].ano),
+                numero : parseInt(result['$'].numero),
+                codigo : parseInt(result['idProposicao']),
+                tema : result['tema'],
+                ementa : result['Ementa'],
+                explicacaoEmenta : result['ExplicacaoEmenta'],
+                link : result['LinkInteiroTeor'],
+                autor : result['Autor'],
+                id_autor : parseInt(result['ideCadastro']),
+
+            };
+           resolve(final_obj)
+        });
+    });
+    
+    
+}
+
+
 
 
 module.exports = {
-    parseData : parseData
+    parseData : parseData,
+    getDetailedInfo : getDetailedInfo,
 }
