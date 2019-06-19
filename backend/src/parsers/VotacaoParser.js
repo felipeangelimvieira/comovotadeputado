@@ -21,7 +21,20 @@ function handleVotacao(err, res, votacoes)  {
 
 listaPropsCallback = async function(props) {
     votacoes = {}
-    props.map(prop => requestVotacao(prop, handleVotacao));
+    props.map(prop => {
+
+        new Promise( function(resolve, reject) 
+        {
+            var url = endpoint;
+            url += 'tipo=';
+            url += prop.tipo;
+            url += '&numero=';
+            url += prop.numero;
+            url += '&ano=' + prop.ano;
+            
+            https.get(url, res => {handleVotacaoRequest(res, url, callback)});
+        });
+    });
 }
 
 var requestVotacao = function(prop, callback) {
@@ -31,7 +44,7 @@ var requestVotacao = function(prop, callback) {
     url += '&numero=';
     url += prop.numero;
     url += '&ano=' + prop.ano;
-    https.get(url, res => handleVotacaoRequest(res, url, callback));
+    https.get(url, res => {handleVotacaoRequest(res, url, callback)});
 
 }
 
