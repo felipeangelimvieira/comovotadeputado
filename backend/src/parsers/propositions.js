@@ -1,6 +1,26 @@
 const xml2js = require('xml2js');
 const https = require('../https-promise')
 
+async function get(year = 2019) {
+    let url = `https://www.camara.leg.br/SitCamaraWS/Proposicoes.asmx/ListarProposicoesVotadasEmPlenario?ano=${year}&tipo=`;
+    parsedPropositions = await parseData(await https.get(url));
+    parsedPropositions = Array.from(new Set(parsedPropositions.map(x=> x.codigo)))
+    .map( codigo =>{
+        prop = parsedPropositions.find(x => x.codigo == codigo)
+        return {
+            tipo: prop.tipo,
+            numero: prop.numero,
+            ano: prop.ano,
+            codigo: prop.codigo,
+            data: prop.data,
+        }
+    });
+    parsedPropositions = Promise.all(parsedPropositions.map(x=> getDetailedInfo(x.codigo))); 
+    
+    return parsedPropositions
+    
+}
+
 function parseData(data) {
 
     /*  Recebe xml da API do congresso
@@ -103,4 +123,5 @@ async function getDetailedInfo(codigo) {
 module.exports = {
     parseData : parseData,
     getDetailedInfo : getDetailedInfo,
+    get : get,
 }

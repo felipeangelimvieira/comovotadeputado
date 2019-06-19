@@ -4,7 +4,7 @@ xmlParser = new xml2js.Parser();
 xmlParser.on('error', err => console.log('Parser error', err));
 const endpoint = 'https://www.camara.leg.br/SitCamaraWS/Proposicoes.asmx/ObterVotacaoProposicao?';
 
-function getVotationForPropositions(propositions) {
+async function getVotationForPropositions(propositions) {
 
     promises = propositions.map(prop => 
         {
@@ -18,7 +18,8 @@ function getVotationForPropositions(propositions) {
             return https.get(url);
         });
 
-    return Promise.all(promises)
+    all_requests = Promise.all(promises);
+    return parseData(await all_requests);
 }
 
 /*
