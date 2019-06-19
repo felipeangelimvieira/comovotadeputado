@@ -101,7 +101,7 @@ async function getDetailedInfo(codigo) {
                 tipo : result['$'].tipo.replace(/ /g,''),
                 ano : parseInt(result['$'].ano),
                 numero : parseInt(result['$'].numero),
-                codigo : parseInt(result['idProposicao']),
+                _id : parseInt(result['idProposicao']),
                 tema : result['tema'],
                 ementa : result['Ementa'],
                 explicacaoEmenta : result['ExplicacaoEmenta'],

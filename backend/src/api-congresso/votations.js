@@ -70,7 +70,7 @@ function formatVotes(proposition) {
             data: votacao_atual['$'].Data,
             hora: votacao_atual['$'].Hora,
             objetivo: votacao_atual['$'].ObjVotacao,
-            codigoSessao: votacao_atual['$'].codSessao,
+            _id: votacao_atual['$'].codSessao,
             votos : votos,
         })
         
