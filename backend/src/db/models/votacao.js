@@ -6,7 +6,7 @@ var sessaoSchema = new Schema({
     data : String,
     hora : String,
     objetivo : String,
-    _id : Number,
+    sessao_id : Number,
     votos : {   
         deputado_id : Number,
         voto : String,
@@ -17,10 +17,8 @@ var votacaoSchema = new Schema(
 {   sigla : String,
     numero : Number,
     ano : Number,
-    votacoes : [sessaoSchema]});
+    sessoes : [sessaoSchema]}, { collection: 'Votacoes' });
 
 var Votacao = mongoose.model('Votacao', votacaoSchema);
 
-module.exports = {
-    Votacao : Votacao,
-}
+module.exports = Votacao;

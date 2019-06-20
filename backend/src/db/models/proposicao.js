@@ -5,17 +5,15 @@ var proposicaoSchema = new Schema({
     tipo : String,
     ano : Number,
     numero : Number,
-    _id : Number,
+    proposicao_id : Number,
     tema : String,
     ementa : String,
     explicacaoEmenta : String,
     link : String,
     autor : String,
-    id_autor : Number,
-})
+    id_autor : { type : Number, default : -1},
+}, { collection: 'Proposicoes' });
 
 var Proposicao = mongoose.model('Proposicao', proposicaoSchema);
 
-module.exports = {
-    Proposicao : Proposicao,
-}
+module.exports = Proposicao;

@@ -101,14 +101,13 @@ async function getDetailedInfo(codigo) {
                 tipo : result['$'].tipo.replace(/ /g,''),
                 ano : parseInt(result['$'].ano),
                 numero : parseInt(result['$'].numero),
-                _id : parseInt(result['idProposicao']),
-                tema : result['tema'],
-                ementa : result['Ementa'],
-                explicacaoEmenta : result['ExplicacaoEmenta'],
-                link : result['LinkInteiroTeor'],
-                autor : result['Autor'],
-                id_autor : parseInt(result['ideCadastro']),
-
+                proposicao_id : parseInt(result['idProposicao']),
+                tema : result['tema'][0],
+                ementa : result['Ementa'][0],
+                explicacaoEmenta : result['ExplicacaoEmenta'][0],
+                link : result['LinkInteiroTeor'][0],
+                autor : result['Autor'][0],
+                id_autor : parseInt(result['ideCadastro']) || 0,
             };
            resolve(final_obj)
         });

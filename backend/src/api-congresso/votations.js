@@ -70,16 +70,16 @@ function formatVotes(proposition) {
             data: votacao_atual['$'].Data,
             hora: votacao_atual['$'].Hora,
             objetivo: votacao_atual['$'].ObjVotacao,
-            _id: votacao_atual['$'].codSessao,
+            sessao_id: votacao_atual['$'].codSessao,
             votos : votos,
         })
         
     }
 
     proposicao_parsed = {
-        sigla : proposicao.Sigla,
-        numero : proposicao.Numero,
-        ano : proposicao.Ano,
+        sigla : proposicao.Sigla[0],
+        numero : proposicao.Numero[0],
+        ano : proposicao.Ano[0],
         sessoes : votacoes,
     }
 

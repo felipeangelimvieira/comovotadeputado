@@ -29,7 +29,9 @@ function parseData(data) {
 function formatCongressman(congressman) {
 
     return {
-        _id : congressman.ideCadastro[0],
+        nome : congressman.nome[0],
+        nomeParlamentar : congressman.nomeParlamentar[0],
+        deputado_id : congressman.ideCadastro[0],
         orcamento_id : congressman.codOrcamento[0],
         condicao : congressman.condicao[0],
         email : congressman.email[0],
