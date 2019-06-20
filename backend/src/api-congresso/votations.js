@@ -80,7 +80,7 @@ function formatVotes(proposition) {
         sigla : proposicao.Sigla,
         numero : proposicao.Numero,
         ano : proposicao.Ano,
-        votacoes : votacoes,
+        sessoes : votacoes,
     }
 
 
