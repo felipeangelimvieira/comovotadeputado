@@ -1,4 +1,4 @@
-const https = require('../https-promise')
+const https = require('./https-promise')
 const xml2js = require('xml2js');
 xmlParser = new xml2js.Parser();
 xmlParser.on('error', err => console.log('Parser error', err));

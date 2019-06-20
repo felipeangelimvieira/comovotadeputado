@@ -1,5 +1,5 @@
 const xml2js = require('xml2js');
-const https = require('../https-promise')
+const https = require('./https-promise')
 
 async function get(year = 2019) {
     let url = `https://www.camara.leg.br/SitCamaraWS/Proposicoes.asmx/ListarProposicoesVotadasEmPlenario?ano=${year}&tipo=`;

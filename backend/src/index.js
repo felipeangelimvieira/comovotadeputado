@@ -1,15 +1,14 @@
-//const https = require('https');
-const https = require('./https-promise')
-const propositions = require('./api-congresso/propositions');
-const votations = require('./api-congresso/votations');
-const congressmen = require('./api-congresso/congressmen');
+const { getDataFromCongress } = require('./api-congresso/congress-data');
+const db = require('./db/index');
+const mongoose = require('mongoose');
+const express = require('express');
+const cors = require('cors');
+const routes = require('routes');
+const app = express();
+const server = require('http').Server(app);
 
-getDataFromCongress()
+//getDataFromCongress();
 
-async function getDataFromCongress() {
-    
-    var parsedPropositions = await propositions.get(2019)
-    var parsedVotations = await votations.getVotationForPropositions(parsedPropositions);
-    var parsedCongressmen = await congressmen.get();
-    console.log(parsedVotations);
-}
+db.connect()
+//mongoose.connection.close();
+

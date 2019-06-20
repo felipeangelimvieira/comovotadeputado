@@ -1,5 +1,5 @@
 const xml2js = require('xml2js');
-const https = require('../https-promise')
+const https = require('./https-promise')
 
 
 async function get() {
