@@ -8,16 +8,22 @@ async function connect() {
         useNewUrlParser: true
     });
     
+    return new Promise(function(resolve, reject) { 
     mongoose.connection.on('open', function (ref) {
         console.log('Connected to mongo server.');
         //trying to get collection names
         mongoose.connection.db.listCollections().toArray(function (err, names) {
+            if (err) {
+                reject(err);
+            }
             console.log(names); // [{ name: 'dbname.myCollection' }]
             if (names.length == 0) {
                 start()
             }
+            resolve('Resolved')
         });
-    })
+    });
+});
 }
 
 async function start() {

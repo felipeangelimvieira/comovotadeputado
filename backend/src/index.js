@@ -9,6 +9,12 @@ const server = require('http').Server(app);
 
 //getDataFromCongress();
 
-db.connect()
+
+
+main()
 //mongoose.connection.close();
 
+
+async function main() {
+    await db.connect();
+}
