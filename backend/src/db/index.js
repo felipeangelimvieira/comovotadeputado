@@ -10,61 +10,104 @@ async function connect() {
     mongoose.connect(MONGODB_URL, {
         useNewUrlParser: true
     });
-    
-    return new Promise(function(resolve, reject) { 
-    mongoose.connection.on('open', function (ref) {
-        console.log('Connected to mongo server.');
-        //trying to get collection names
-        mongoose.connection.db.listCollections().toArray(async function (err, names) {
-            if (err) {
-                reject(err);
-            }
-            console.log(names.length); // [{ name: 'dbname.myCollection' }]
-            if (names.length == 0) {
-                await start();
-            }
-            else {
-                console.log(names)
-                names.map( collection => mongoose.connection.db.dropDatabase(collection.name));
-                mongoose.connection.close();
 
-            }
-            resolve('Resolved')
-        });
-    });
-});
+    await connectionIsOpen();
+    
+    await start();
+
+    //await mongoose.connection.dropDatabase();
+
+    mongoose.connection.close();
 }
 
 async function start() {
     console.log('Starting database');
     var { votations, propositions, congressmen } = await getDataFromCongress();
-
-    console.log(`${propositions.length} propositions`);
-    console.log(`${votations.length} votations`);
-    console.log(`${congressmen.length} congressmen`);
-    votations.map(x => new Votacao(x).save( (err, res) => 
-    {if (err) {
-        Error(err);
-    }}));
-    var t = propositions.map(x => (new Proposicao(x)).save( (err, res) => 
-    {if (err) {
-        console.log(err);
-        Error(err);
-    }}));
-    console.log(t.length);
-    congressmen.map(x => new Deputado(x).save( (err, res) => 
-    {if (err) {
-        Error(err);
-    }}));
+    console.log("got data")
+    promises = [createVotationCollection(votations),
+                createPropositionCollection(propositions),
+                createCongressmenCollection(congressmen)]
+    console.log(promises)
     
-
-    //console.log("Votacoes",votations);
-    console.log("Finished test");
-    //mongoose.connection.close();
-
-    
+    return Promise.all(promises);
 }
 
+function createVotationCollection(votations) {
+    promises = votations.map(x =>
+        {   return new Promise( function (resolve, reject) { 
+            let votacao = new Votacao(x)
+            votacao.save( (err, res) => {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(res)
+                }
+            });
+        });
+        });
+    return Promise.all(promises)
+}
+
+function createPropositionCollection(propositions) {
+    promises = propositions.map(x =>
+        {   return new Promise( function (resolve, reject) { 
+            let proposition = new Proposicao(x)
+            proposition.save( (err, res) => {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(res)
+                }
+            });
+        });
+        });
+    return Promise.all(promises)
+}
+
+function createCongressmenCollection(congressmen) {
+    promises = congressmen.map(x =>
+        {   return new Promise( function (resolve, reject) { 
+            let congressman = new Deputado(x)
+            congressman.save( (err, res) => {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(res)
+                }
+            });
+        });
+        });
+    return Promise.all(promises)
+}
+
+function getCollectionNames() {
+
+    
+    return new Promise( function(resolve, reject) { 
+
+        mongoose.connection.db.collections(function(err, collections){
+            if(err)
+            reject(err);
+            else{
+            resolve(collections.map(x => x.s.name));
+            }
+
+
+    });
+});
+}
+
+function connectionIsOpen() {
+    return new Promise(function(resolve, reject) { 
+        mongoose.connection.on('open', function (ref) {
+                console.log('Connection is open.')
+                resolve(true)
+            });
+        });  
+}
 
 module.exports = {
     connect : connect,
