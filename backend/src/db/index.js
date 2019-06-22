@@ -8,7 +8,8 @@ const Votacao = require('./models/votacao');
 async function connect() {
 
     mongoose.connect(MONGODB_URL, {
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useFindAndModify : false
     });
 
     await connectionIsOpen();
@@ -30,10 +31,11 @@ async function start() {
     console.log('Starting database');
     var { votations, propositions, congressmen } = await getDataFromCongress();
     console.log("got data")
-    
-    promises = [createCollection(votations.slice(5),Votacao),
-                createCollection(propositions.slice(5), Proposicao),
-                createCollection(congressmen.slice(3), Deputado)];
+    votations[1].sessoes = [votations[1].sessoes[0]];
+    console.log(votations[1])
+    promises = [createCollection(votations,Votacao),
+                createCollection(propositions, Proposicao),
+                createCollection(congressmen, Deputado)];
 
     console.log(promises)
     
@@ -114,11 +116,26 @@ function insertPropositionIfNotExists(proposition) {
 }
 
 function insertVotationIfNotExists(votation) {
-    return new Promise(function(resolve, reject) { 
+    return new Promise(function(resolve, reject) {
+
+        Votacao.findOneAndUpdate({sigla : votation.sigla,
+            ano : votation.ano,
+           numero : votation.numero},
+           {'$set' : {'sessoes' : votation.sessoes}}, {},
+            (err, doc) => {
+                if (!err) {
+                    resolve(1);
+                }
+                else{
+                    reject(err);
+                }
+           });
+
+
         query = Votacao.where({sigla : votation.sigla,
                              ano : votation.ano,
                             numero : votation.numero});
-        query.findOne((err, res) => {
+        query.findOneAndUpdate((err, res) => {
             if (!err) 
             {
                 if (!res) 
