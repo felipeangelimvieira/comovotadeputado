@@ -13,9 +13,9 @@ async function connect() {
 
     await connectionIsOpen();
     
-    await start();
+    await mongoose.connection.dropDatabase();
 
-    //await mongoose.connection.dropDatabase();
+    await start();
 
     mongoose.connection.close();
 }
@@ -24,19 +24,21 @@ async function start() {
     console.log('Starting database');
     var { votations, propositions, congressmen } = await getDataFromCongress();
     console.log("got data")
-    promises = [createVotationCollection(votations),
-                createPropositionCollection(propositions),
-                createCongressmenCollection(congressmen)]
+    
+    promises = [createCollection(votations,Votacao),
+                createCollection(propositions, Proposicao),
+                createCollection(congressmen, Deputado)];
+
     console.log(promises)
     
     return Promise.all(promises);
 }
 
-function createVotationCollection(votations) {
-    promises = votations.map(x =>
+function createCollection(collectionArray, Model) {
+    promises = collectionArray.map(x =>
         {   return new Promise( function (resolve, reject) { 
-            let votacao = new Votacao(x)
-            votacao.save( (err, res) => {
+            let collection = new Model(x)
+            collection.save( (err, res) => {
                 if (err) {
                     reject(err)
                 }
@@ -47,41 +49,7 @@ function createVotationCollection(votations) {
         });
         });
     return Promise.all(promises)
-}
-
-function createPropositionCollection(propositions) {
-    promises = propositions.map(x =>
-        {   return new Promise( function (resolve, reject) { 
-            let proposition = new Proposicao(x)
-            proposition.save( (err, res) => {
-                if (err) {
-                    reject(err)
-                }
-                else {
-                    resolve(res)
-                }
-            });
-        });
-        });
-    return Promise.all(promises)
-}
-
-function createCongressmenCollection(congressmen) {
-    promises = congressmen.map(x =>
-        {   return new Promise( function (resolve, reject) { 
-            let congressman = new Deputado(x)
-            congressman.save( (err, res) => {
-                if (err) {
-                    reject(err)
-                }
-                else {
-                    resolve(res)
-                }
-            });
-        });
-        });
-    return Promise.all(promises)
-}
+} 
 
 function getCollectionNames() {
 
@@ -109,6 +77,47 @@ function connectionIsOpen() {
         });  
 }
 
+function findModelInstances(model) {
+
+}
+function checkAndUpdateDatabase() {
+    updatePromise = new Promise(function(resolve, reject) {  
+        Proposicao.find({}, (err, res) => {
+            if (err) {
+                throw Error(err)
+            }
+            //await Promise.all(res.map(insertPropositionIfNotExists));
+        });
+    });
+
+}
+
+function insertPropositionIfNotExists(proposition) {
+    return new Promise(function(resolve, reject) { 
+    query = Proposicao.where({numero : proposition.numero, ano : proposition.ano});
+    query.findOne((err, res) => {
+        if (!err) 
+        {
+            if (!res) 
+            {
+                let proposition = new Proposicao(proposition);
+                proposition.save( (err, res) => {
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                }
+                resolve(res);
+                });
+            }
+        }
+        else
+        {
+            console.log(err);
+        }
+});
+});
+
+}
 module.exports = {
     connect : connect,
 }
