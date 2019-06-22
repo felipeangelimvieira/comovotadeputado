@@ -13,16 +13,16 @@ async function connect() {
 
     await connectionIsOpen();
     
-    await mongoose.connection.dropDatabase();
+    //await mongoose.connection.dropDatabase();
+    //console.log(await Proposicao.find({}));
 
-    console.log(await Proposicao.find({}));
-
-    await start();
+    if ((await getCollections()).length == 0) 
+    {
+        await start();
+    }
 
     res = await checkAndUpdateDatabase();
-
     console.log(`${res.reduce((acc,newValue) => acc + newValue)} updates.`);
-
     mongoose.connection.close();
 }
 
@@ -175,6 +175,19 @@ function insertCongressmanIfNotExists(congressman) {
             }
     });
     });
+}
+
+
+function getCollections() {
+    return new Promise(function(resolve, reject) { 
+    mongoose.connection.db.collections(function(err, collections){
+        if(err)
+        reject(err);
+        else{
+        resolve(collections);
+        }
+    });
+});
 }
 
 module.exports = {
