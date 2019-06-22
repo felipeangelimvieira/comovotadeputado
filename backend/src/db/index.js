@@ -15,7 +15,13 @@ async function connect() {
     
     await mongoose.connection.dropDatabase();
 
+    console.log(await Proposicao.find({}));
+
     await start();
+
+    res = await checkAndUpdateDatabase();
+
+    console.log(`${res.reduce((acc,newValue) => acc + newValue)} updates.`);
 
     mongoose.connection.close();
 }
@@ -25,9 +31,9 @@ async function start() {
     var { votations, propositions, congressmen } = await getDataFromCongress();
     console.log("got data")
     
-    promises = [createCollection(votations,Votacao),
-                createCollection(propositions, Proposicao),
-                createCollection(congressmen, Deputado)];
+    promises = [createCollection(votations.slice(5),Votacao),
+                createCollection(propositions.slice(5), Proposicao),
+                createCollection(congressmen.slice(3), Deputado)];
 
     console.log(promises)
     
@@ -51,23 +57,6 @@ function createCollection(collectionArray, Model) {
     return Promise.all(promises)
 } 
 
-function getCollectionNames() {
-
-    
-    return new Promise( function(resolve, reject) { 
-
-        mongoose.connection.db.collections(function(err, collections){
-            if(err)
-            reject(err);
-            else{
-            resolve(collections.map(x => x.s.name));
-            }
-
-
-    });
-});
-}
-
 function connectionIsOpen() {
     return new Promise(function(resolve, reject) { 
         mongoose.connection.on('open', function (ref) {
@@ -77,47 +66,117 @@ function connectionIsOpen() {
         });  
 }
 
-function findModelInstances(model) {
+async function checkAndUpdateDatabase() {
 
-}
-function checkAndUpdateDatabase() {
-    updatePromise = new Promise(function(resolve, reject) {  
-        Proposicao.find({}, (err, res) => {
-            if (err) {
-                throw Error(err)
-            }
-            //await Promise.all(res.map(insertPropositionIfNotExists));
-        });
-    });
+    var { votations, propositions, congressmen } = await getDataFromCongress();
 
+    console.log("Updating database");
+
+    var propositionPromises = propositions.map(x => insertPropositionIfNotExists(x));
+    var votationPromises = votations.map( x => insertVotationIfNotExists(x));
+    var congressmanPromises = congressmen.map( x => insertCongressmanIfNotExists(x));
+
+    promises = propositionPromises.concat(votationPromises).concat(congressmanPromises);
+    return Promise.all(promises);
 }
 
 function insertPropositionIfNotExists(proposition) {
     return new Promise(function(resolve, reject) { 
-    query = Proposicao.where({numero : proposition.numero, ano : proposition.ano});
-    query.findOne((err, res) => {
-        if (!err) 
-        {
-            if (!res) 
+        query = Proposicao.where({numero : proposition.numero,
+                                ano : proposition.ano,
+                                tipo : proposition.tipo});
+        query.findOne((err, res) => {
+            if (!err) 
             {
-                let proposition = new Proposicao(proposition);
-                proposition.save( (err, res) => {
-                if (err) {
-                    console.log(err);
-                    reject(err);
+                if (!res) 
+                {
+                    let instance = new Proposicao(proposition);
+                    instance.save( (err, res) => {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    resolve(1);
+                    });
                 }
-                resolve(res);
-                });
+                else{
+                resolve(0);
+                }
             }
-        }
-        else
-        {
-            console.log(err);
-        }
-});
-});
 
+            else
+            {
+                console.log(err);
+                reject(err)
+            }
+    });
+    });
 }
+
+function insertVotationIfNotExists(votation) {
+    return new Promise(function(resolve, reject) { 
+        query = Votacao.where({sigla : votation.sigla,
+                             ano : votation.ano,
+                            numero : votation.numero});
+        query.findOne((err, res) => {
+            if (!err) 
+            {
+                if (!res) 
+                {
+                    let instance = new Votacao(votation);
+                    instance.save( (err, res) => {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    resolve(1);
+                    });
+                }
+                else{
+                resolve(0);
+                }
+            }
+
+            else
+            {
+                console.log(err);
+                reject(err)
+            }
+    });
+    });
+}
+
+function insertCongressmanIfNotExists(congressman) {
+    return new Promise(function(resolve, reject) { 
+        query = Deputado.where({deputado_id : congressman.deputado_id});
+        query.findOne((err, res) => {
+            if (!err) 
+            {
+                if (!res) 
+                {
+                    let instance = new Deputado(congressman);
+                    instance.save( (err, res) => {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    resolve(1);
+                    });
+                }
+                else{
+                resolve(0);
+                }
+            }
+
+            else
+            {
+                console.log(err);
+                reject(err)
+            }
+    });
+    });
+}
+
 module.exports = {
     connect : connect,
 }
