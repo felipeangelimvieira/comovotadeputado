@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+var votoSchema = new Schema({
+    deputado_id : Number,
+    voto : String
+})
 var sessaoSchema = new Schema({
     resumo : String,
     data : String,
     hora : String,
     objetivo : String,
     sessao_id : Number,
-    votos : {   
-        deputado_id : Number,
-        voto : String,
-    }
+    votos : [votoSchema]
 });
 
 var votacaoSchema = new Schema(

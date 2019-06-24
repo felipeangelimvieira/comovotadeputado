@@ -22,9 +22,9 @@ async function connect() {
         await start();
     }
 
-    res = await checkAndUpdateDatabase();
-    console.log(`${res.reduce((acc,newValue) => acc + newValue)} updates.`);
-    mongoose.connection.close();
+    //res = await checkAndUpdateDatabase();
+    //console.log(`${res.reduce((acc,newValue) => acc + newValue)} updates.`);
+    //mongoose.connection.close();
 }
 
 async function start() {
