@@ -1,12 +1,28 @@
 import React, {Component} from 'react';
 
 import {Image} from 'react-bootstrap';
+import axios from 'axios';
 import NavBar from './components/NavBar/NavBar';
 import Autocomplete from './components/CustomAutoComplete';
 import imagem_congresso from './assets/imagem_congresso.jpg';
 
+
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      deputados : []
+    }
+  }
+    
+  componentDidMount() {
+    axios.get('http://localhost:3333/deputados')
+    .then(response => {
+      console.log(response)
+      this.setState({deputados : response})
+    });
+  }
   
   render() {
 
@@ -15,10 +31,10 @@ class App extends Component {
   var textStyle = { 
     position: 'absolute',
     top: '13vw',
-    'text-align' : 'left',
+    textAlign : 'left',
     color: '#fff',
     margin: '0 10% 0 10%',
-    'font-size' : '4vw',
+    fontSize : '4vw',
   }
 
   return (
@@ -41,11 +57,7 @@ class App extends Component {
         </Image>
         <h1 style={textStyle}>Você sabe quem seu candidato foi durante as eleições. <br/> Quem ele é agora? </h1>
         <div style = {{marginTop : '3vw'}}>
-        <Autocomplete items={[
-    { name: 'apple' },
-    { name: 'banana' },
-    { name: 'pear' }
-  ]}/>
+        <Autocomplete items={this.state.deputados.data}/>
       </div>
       </div>
       </main>

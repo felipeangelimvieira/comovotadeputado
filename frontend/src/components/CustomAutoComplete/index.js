@@ -3,7 +3,7 @@ import Autocomplete from 'react-autocomplete';
 
 function matchItemToValue(item, value) {
     return (
-      item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 
+      item.nomeParlamentar.toLowerCase().indexOf(value.toLowerCase()) !== -1 
     )
   }
 
@@ -18,7 +18,7 @@ class CustomAutocomplete extends Component {
             //inputProps={{ id: 'states-autocomplete' }}
             wrapperStyle={{ position: 'relative', display: 'inline-block' }}
             items={this.props.items}
-            getItemValue={(item) => item.name}
+            getItemValue={(item) => item.nomeParlamentar}
             shouldItemRender={matchItemToValue}
             onChange={(event, value) => this.setState({ value })}
             onSelect={value => this.setState({ value })}
@@ -31,7 +31,7 @@ class CustomAutocomplete extends Component {
               <div
                 className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
                 //key={item.id}
-              >{item.name}</div>
+              >{item.nomeParlamentar}</div>
             )}
           />
         </div>
