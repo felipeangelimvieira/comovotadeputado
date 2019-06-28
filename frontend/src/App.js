@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 
 import {Image} from 'react-bootstrap';
 import NavBar from './components/NavBar/NavBar';
-import imagem_congresso from './assets/imagem_congresso.jpg'
+import Autocomplete from './components/CustomAutoComplete';
+import imagem_congresso from './assets/imagem_congresso.jpg';
 
 class App extends Component {
 
@@ -13,12 +14,11 @@ class App extends Component {
   backgroundSize: 'cover'};
   var textStyle = { 
     position: 'absolute',
-    top: '10vw',
-    'text-align' : 'center',
+    top: '13vw',
+    'text-align' : 'left',
     color: '#fff',
     margin: '0 10% 0 10%',
     'font-size' : '4vw',
-    'horizontal-align': 'middle',
   }
 
   return (
@@ -31,7 +31,7 @@ class App extends Component {
     padding: 0,
     left: 0,
     right: 0,
-    margin: '0 auto',
+    marginTop: '',
     display: 'inline',
     'text-align': 'center',
     border: 'none'}}>
@@ -39,7 +39,14 @@ class App extends Component {
           style={background} responsive
           src={imagem_congresso}>
         </Image>
-        <h1 style={textStyle}>Voce sabe quem seu candidato foi durante as eleições. <br/> Quem ele é agora? </h1>
+        <h1 style={textStyle}>Você sabe quem seu candidato foi durante as eleições. <br/> Quem ele é agora? </h1>
+        <div style = {{marginTop : '3vw'}}>
+        <Autocomplete items={[
+    { name: 'apple' },
+    { name: 'banana' },
+    { name: 'pear' }
+  ]}/>
+      </div>
       </div>
       </main>
     </div>
