@@ -1,23 +1,7 @@
 import React, { Component } from 'react';
 import Autocomplete from 'react-autocomplete';
+import './styles.css'
 
-function toCamelCase(string) {
-
-  var split = string.split(' ');
-  var new_word = [];
-  for (var i = 0; i < split.length; i++) {
-    var word = split[i];
-    if (word === 'de' || word === 'das' || word === 'dos') {
-      new_word.push(word);
-    }
-    else {
-      new_word.push(word[0].toUpperCase() + word.slice(1));
-    }
-  }
-
-  return new_word.join(' ')
-
-}
 
 function matchItemToValue(item, value) {
     return (
@@ -28,15 +12,14 @@ function matchItemToValue(item, value) {
 class CustomAutocomplete extends Component {
     state = { value: '' } 
     render() {
-      console.log(toCamelCase('abc de eftgh asdipij'));
-      console.log(this.props.items)
       return (
         <div>
           <label htmlFor="states-autocomplete">Como vota,</label>
           <Autocomplete
             value={this.state.value}
             //inputProps={{ id: 'states-autocomplete' }}
-            wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+            wrapperProps = {{className : "wrapper"}}
+            wrapperStyle={{ position: 'relative', minHeight :  '10vh' }}
             items={this.props.items}
             getItemValue={(item) => item.nomeParlamentar}
             shouldItemRender={matchItemToValue}
@@ -47,6 +30,7 @@ class CustomAutocomplete extends Component {
                 {children}
               </div>
             )}
+            inputProps = {{className : 'input'}}
             renderItem={(item, isHighlighted) => (
               <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}
                 className={`item ${isHighlighted ? 'item-highlighted' : ''}`}

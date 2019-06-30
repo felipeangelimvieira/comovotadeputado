@@ -33,6 +33,12 @@ async function start() {
     console.log("got data")
     votations[1].sessoes = [votations[1].sessoes[0]];
     console.log(votations[1])
+
+    congressmen = congressmen.map( x => {
+        x.nomeParlamentar = toCamelCase(x.nomeParlamentar);
+        return x
+    });
+
     promises = [createCollection(votations,Votacao),
                 createCollection(propositions, Proposicao),
                 createCollection(congressmen, Deputado)];
@@ -206,6 +212,25 @@ function getCollections() {
     });
 });
 }
+
+function toCamelCase(string) {
+
+    var split = string.split(' ');
+    var new_word = [];
+    for (var i = 0; i < split.length; i++) {
+      var word = split[i];
+      if (word.length > 0)
+{
+      if (word === 'de' || word === 'das' || word === 'dos') {
+        new_word.push(word);
+      }
+      else {
+        new_word.push(word[0].toUpperCase() + word.slice(1).toLowerCase());
+      }
+}}
+    return new_word.join(' ')
+  
+  }
 
 module.exports = {
     connect : connect,
