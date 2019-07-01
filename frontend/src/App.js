@@ -13,16 +13,12 @@ import Votes from './components/Votes'
 
 
 function App() {
-  
   return (
-    <div>
     <BrowserRouter>
     <NavBar />
     <Routes />
     <Footer/>
     </BrowserRouter>
-
-    </div>
     );
 }
 
