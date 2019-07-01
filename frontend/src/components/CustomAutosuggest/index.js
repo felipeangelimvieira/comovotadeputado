@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import './autosuggest.css'
+import axios from 'axios'
 
 
 // When suggestion is clicked, Autosuggest needs to populate the input
@@ -15,7 +16,7 @@ const renderSuggestion = suggestion => (
   </div>
 );
 
-class CustomAutosuggest extends React.Component {
+class CustomAutosuggest extends Component {
   constructor(props) {
     super();
 
@@ -29,12 +30,20 @@ class CustomAutosuggest extends React.Component {
       suggestions: []
     };
   }
+  
+  componentDidMount() {
+    axios.get('http://localhost:3333/deputados')
+    .then(response => {
+      console.log("COMPONENT DID MOUNT", response)
+      this.setState({congressmen : response.data})
+    });
+  }
 
   getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
   
-    var suggestions = inputLength === 0 ? [] : this.props.congressmen.filter(x =>
+    var suggestions = inputLength === 0 ? [] : this.state.congressmen.filter(x =>
       x.nomeParlamentar.toLowerCase().slice(0, inputLength) === inputValue
     );
     return suggestions.slice(0,this.props.numItems)
