@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {Image} from 'react-bootstrap';
 import axios from 'axios';
 import NavBar from './components/NavBar/NavBar';
-import Autocomplete from './components/CustomAutoComplete';
 import Autosuggest from './components/CustomAutosuggest';
 import Footer from './components/Footer';
 import imagem_congresso from './assets/imagem_congresso.jpg';
