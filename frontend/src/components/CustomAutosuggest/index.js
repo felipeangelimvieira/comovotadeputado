@@ -18,7 +18,7 @@ const renderSuggestion = suggestion => (
 class CustomAutosuggest extends React.Component {
   constructor(props) {
     super();
-    
+
     // Autosuggest is a controlled component.
     // This means that you need to provide an input value
     // and an onChange handler that updates this value (see below).
@@ -62,12 +62,16 @@ class CustomAutosuggest extends React.Component {
     });
   };
 
+  onSuggestionSelected = (event, { suggestion }) => {
+    
+  }
+
   render() {
     const { value, suggestions } = this.state;
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Deputado?',
+      placeholder: '', //'Deputado?',
       value,
       onChange: this.onChange
     };
@@ -81,6 +85,7 @@ class CustomAutosuggest extends React.Component {
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
+        onSuggestionSelected = {this.onSuggestionSelected}
       />
     );
   }

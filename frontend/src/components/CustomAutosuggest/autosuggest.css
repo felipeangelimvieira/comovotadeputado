@@ -1,5 +1,6 @@
 .react-autosuggest__container {
     position: relative;
+    padding-left: 1rem;
     align-content: center;
   }
   
@@ -7,14 +8,15 @@
     
     display: inline-block;
     text-align: center;
-    width: 13rem;
+    width: 25vw;
     height: 30px;
-    padding: 10px 2rem;
+    padding: 1.4rem 2rem 0 2rem;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     font-size: 1rem;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    border: 0px solid #aaa;
+    border-bottom: 2px solid rgba(243, 225, 62, 0.8);
+    border-radius: 0px;
     -webkit-appearance: none;
   }
   
@@ -53,6 +55,7 @@
   
   .react-autosuggest__suggestions-list {
     padding: 0;
+    margin-top: 0.2rem;
     align-content: center;
     list-style-type: none;
   }
