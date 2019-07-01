@@ -4,6 +4,7 @@ import {Image} from 'react-bootstrap';
 import axios from 'axios';
 import NavBar from './components/NavBar/NavBar';
 import Autocomplete from './components/CustomAutoComplete';
+import Autosuggest from './components/CustomAutosuggest';
 import Footer from './components/Footer';
 import imagem_congresso from './assets/imagem_congresso.jpg';
 
@@ -43,25 +44,34 @@ class App extends Component {
       <NavBar />
       <main style={{top: 0, left: 0, width : '100%'}}>
         
-      <div style={{
-    width : '100%',
-    padding: 0,
-    left: 0,
-    right: 0,
-    marginTop: '',
-    display: 'inline',
-    'text-align': 'center',
-    border: 'none'}}>
-        <Image
-          style={background} responsive
-          src={imagem_congresso}>
-        </Image>
-        <h1 style={textStyle}>Você sabe quem seu candidato foi durante as eleições. <br/> Quem ele é agora? </h1>
-        <div style = {{marginTop : '3vw'}}>
-        <Autocomplete items={this.state.deputados.data}/>
-        <Footer />
-      </div>
-      </div>
+        <div style={{width : '100%',
+                    padding: 0,
+                    left: 0,
+                    right: 0,
+                    marginTop: '',
+                    display: 'inline',
+                    textAlign: 'center',
+                    border: 'none'}}>
+          <Image
+            style={background} responsive
+            src={imagem_congresso}>
+          </Image>
+          <h1 style={textStyle}>Você sabe quem seu candidato foi durante as eleições. <br/> Quem ele é agora? </h1>
+          <div style = {{marginTop : '3vw', textAlign: 'center'}}>
+            <div style= {{display: 'inline-block'}}>
+            <div style = {{display: 'flex'}}>
+              <h1 style={{fontFamily : "'Open Sans', sans-serif"}}>Como vota,  </h1>
+              <br></br>
+            <Autosuggest congressmen={this.state.deputados.data} numItems={5}/>
+            <h1>?</h1>
+            </div>
+            </div>
+          </div>
+          <div style = {{position: 'relative', left: 0, marginTop: '50vh', bottom: 0, width: '100%', textAlign: 'center'}}>
+            <Footer />
+            
+          </div>
+        </div>
       </main>
     </div>
   );
