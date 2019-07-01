@@ -4,6 +4,7 @@ import {Image} from 'react-bootstrap';
 import axios from 'axios';
 import NavBar from './components/NavBar/NavBar';
 import Autocomplete from './components/CustomAutoComplete';
+import Footer from './components/Footer';
 import imagem_congresso from './assets/imagem_congresso.jpg';
 
 
@@ -58,6 +59,7 @@ class App extends Component {
         <h1 style={textStyle}>Você sabe quem seu candidato foi durante as eleições. <br/> Quem ele é agora? </h1>
         <div style = {{marginTop : '3vw'}}>
         <Autocomplete items={this.state.deputados.data}/>
+        <Footer />
       </div>
       </div>
       </main>
