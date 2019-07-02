@@ -3,7 +3,7 @@ import Autosuggest from '../components/CustomAutosuggest';
 import {Image} from 'react-bootstrap';
 import imagem_congresso from '../assets/imagem_congresso.jpg';
 import Votes from '../components/Votes';
-
+import './comovota.css';
 
 var background = { width: '100%',
                     backgroundSize: 'cover'};
@@ -17,23 +17,46 @@ var textStyle = {
   fontSize : '4vw',
 }
 
+
+
 class Comovota extends Component {
 
     state = {
-        deputado_id : null
+        deputado_id : null,
+        numVotes : 10,
+        hasMore : false,
     };
 
     fetchVoteList = () => {
         if (this.state.deputado_id) {
-            return (<Votes selectedCongressman={this.state.deputado_id}/>);
+            return (<Votes 
+                        selectedCongressman={this.state.deputado_id}
+                        numItems={this.state.numVotes}
+                        setHasMore={this.setHasMore}
+                        hasMore = {this.state.hasMore}
+                        />);
         }
     }
+
+    setHasMore = (bool) => {
+        this.setState({hasMore : bool})
+    }
+
+
     
     updateCongressman = (id) => {
         this.setState({deputado_id : id})
     }
 
-    render() { return (<div style={{height: '100%'}}>
+    fetchMoreVotes = (e) => {
+        console.log(this.state.numVotes);
+        this.setState((state, props) => ({numVotes :  state.numVotes + 10}));
+    }
+
+    render() { 
+        
+     console.log("?", this.state.deputado_id && this.state.hasMore, this.state.deputado_id, this.state.hasMore);
+     return (<div style={{height: '100%'}}>
       
       <main style={{top: 0, left: 0, width : '100%'}}>
         
@@ -55,8 +78,7 @@ class Comovota extends Component {
               <div className="comovota-container" style = {{ margin: 0}}>
                   <h1 style={{fontFamily : "'Open Sans', sans-serif", margin: 0}}>Como vota,</h1>
                 <div className="autosuggest-container" style = {{display: 'flex', margin: 0, padding: 0}}>
-                    
-                  <Autosuggest numItems={5} onItemSelected={this.updateCongressman}/>
+                  <Autosuggest onItemSelected={this.updateCongressman}/>
                   <h1>?</h1>
                 </div>
               </div>
@@ -67,7 +89,11 @@ class Comovota extends Component {
 
         <div className = "cards-container" style = {{textAlign : 'center'}}>
             {this.fetchVoteList()}
+            <div className = "button-container">
+                {(this.state.deputado_id && this.state.hasMore) ? <button onClick={this.fetchMoreVotes}>Clique aqui</button> : null} 
+            </div>
         </div>
+        
       </main>
 </div>)
 }

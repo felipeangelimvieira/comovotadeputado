@@ -17,10 +17,12 @@ class Votes extends Component {
     
     constructor(props) {
     super(props);
+
+    console.log("PROPS", props)
     this.state = {
         votes : [],
         selectedCongressman : null,
-        loading : false
+        loading : false,
     }
 
     }
@@ -29,10 +31,14 @@ class Votes extends Component {
         try {
             this.setState({loading : true})
         var res = await requestVotes(deputado_id);
-        console.log(res.data)
         this.setState({ votes : res.data,
                         selectedCongressman : deputado_id,
                         loading : false});
+
+        if (this.state.votes.length > this.props.numItems) {
+            this.props.setHasMore(true);
+        }
+        
         return 0
 }   
  catch (e) {
@@ -42,23 +48,25 @@ class Votes extends Component {
 
 }
 
-    getVotesAndCards = () =>
-    {
-
-    }
-
     render() {
         console.log(this.state.votes, this.state.votes.length, this.props.selectedCongressman, this.state.selectedCongressman, this.state.loading);
-        
+        console.log('num items render', this.props)
         if ((this.props.selectedCongressman !== this.state.selectedCongressman  || this.state.votes.length === 0) && !this.state.loading)
         { 
             this.getVotes(this.props.selectedCongressman);
         }
+        
+        // check if has more votes to show
+        if (this.state.votes.length <= this.props.numItems && this.props.hasMore) {
+            console.log("SASAS SETTING TO FALSE", this.state.votes.length, this.props.numItems)
+            this.props.setHasMore(false);
+        }
+
 
         if (this.state.votes.length > 0 && this.props.selectedCongressman === this.state.selectedCongressman && !this.state.loading) {
             return (
-                <div id="vote-list" style = {{textAlign: 'center'}}>
-                {this.state.votes.slice(0, 5).map((x,index) => <VoteCard vote={x} key={index}/>)}
+                <div id="vote-list" style = {{textAlign: 'center', display : 'inline-block'}}>
+                {this.state.votes.slice(0, this.props.numItems).map((x,index) => <VoteCard vote={x} key={index} />)}
                 </div>
             )
         }

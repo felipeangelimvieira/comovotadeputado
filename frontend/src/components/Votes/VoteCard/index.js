@@ -4,7 +4,8 @@ import './card.css';
 
 
 const cardStyle = {border: '1px solid #aaa',
-                   width: '25rem',
+                   width: '80vw',
+                   maxWidth : '25rem',
                    margin: '1rem 1rem',
                    borderRadius: '4px'};
 

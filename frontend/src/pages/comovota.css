@@ -1,0 +1,14 @@
+.button-container button{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    background-color: #fff;
+    border : 1px solid #aaa;
+    border-radius: 8px;
+    color: #888;
+}
+
+.button-container button:hover{
+    background-color: rgba(243, 225, 62, 0.5);
+    color: #000;
+    cursor: pointer;
+    }
