@@ -15,5 +15,7 @@ routes.get('/deputado/:id/votos/', votationController.getVotes);
 
 //routes.get('/proposicoes', propositionController);
 
+routes.get('/proposicao/:sigla&:numero&:ano', propositionController.getProposicao);
+
 
 module.exports = routes;
