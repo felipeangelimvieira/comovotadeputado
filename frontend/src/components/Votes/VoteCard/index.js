@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import './card.css';
 
+const objetivoStyle = {
+  textFamily : "'Open Sans', sans serif",
+}
 
 const cardStyle = {border: '1px solid #aaa',
                    width: '80vw',
                    maxWidth : '25rem',
                    margin: '1rem 1rem',
+                   padding: '1rem 1rem',
+                   textAlign: 'left',
                    borderRadius: '4px'};
+
 
 
 class VoteCard extends Component {
@@ -22,14 +28,19 @@ class VoteCard extends Component {
     const number = this.props.vote.numero;
     const type = this.props.vote.sigla;
     const voto = this.props.vote.sessoes.votos.voto;
+    const data = this.props.vote.sessoes.data;
+    const hora = this.props.vote.sessoes.hora;
+    const objetivo = this.props.vote.sessoes.objetivo
+
     return (<Card style = {cardStyle}>
-        <Card.Header>{`${type} ${number}/${year}`}</Card.Header>
+        <Card.Header><strong>{`${type} ${number}/${year}`}</strong>     {`${data} ${hora}`}</Card.Header>
         <Card.Body>
-          <blockquote className="blockquote mb-0">
+            <p style = {objetivoStyle}>
+              {`Objetivo: ${objetivo}`}
+            </p>
             <p>
               {`${voto}`}
             </p>
-          </blockquote>
         </Card.Body>
       </Card>
     );

@@ -8,7 +8,7 @@
     
     display: inline-block;
     text-align: center;
-    width: 25vw;
+    width: 25rem;
     height: 30px;
     padding: 1.4rem 2rem 0 2rem;
     font-family: 'Open Sans', sans-serif;
@@ -42,7 +42,7 @@
   
   .react-autosuggest__suggestions-container--open {
     top: 51px;
-    width: 17rem;
+    width: 29rem;
     border: 1px solid #aaa;
     background-color: #fff;
     font-family: 'Open Sans', sans-serif;

@@ -12,8 +12,7 @@ const sideDrawer = props => {
     return (
     <nav className={drawerClasses.join(' ')}>
         <ul>
-            <li><a href="/">Products</a></li>
-            <li><a href="/">Users</a></li>
+            <li><a href="/">Sobre</a></li>
         </ul>
     </nav>
 );}

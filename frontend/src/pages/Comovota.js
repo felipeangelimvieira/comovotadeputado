@@ -90,7 +90,7 @@ class Comovota extends Component {
         <div className = "cards-container" style = {{textAlign : 'center'}}>
             {this.fetchVoteList()}
             <div className = "button-container">
-                {(this.state.deputado_id && this.state.hasMore) ? <button onClick={this.fetchMoreVotes}>Clique aqui</button> : null} 
+                {(this.state.deputado_id && this.state.hasMore) ? <button onClick={this.fetchMoreVotes}>+</button> : null} 
             </div>
         </div>
         
