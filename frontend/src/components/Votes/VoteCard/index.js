@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
+import './card.css';
+
+
+const cardStyle = {border: '1px solid #aaa',
+                   width: '25rem',
+                   margin: '1rem 1rem',
+                   borderRadius: '4px'};
+
 
 class VoteCard extends Component {
 
     render() {
-    return (<div className="card-container" style = {{textAlign: 'left'}}><Card>
-        <Card.Header>Quote</Card.Header>
+
+    if (!this.props.vote) {
+      return null;
+    }
+
+    const year = this.props.vote.ano;
+    const number = this.props.vote.numero;
+    const type = this.props.vote.sigla;
+    const voto = this.props.vote.sessoes.votos.voto;
+    return (<Card style = {cardStyle}>
+        <Card.Header>{`${type} ${number}/${year}`}</Card.Header>
         <Card.Body>
           <blockquote className="blockquote mb-0">
             <p>
-              {' '}
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-              erat a ante.{' '}
+              {`${voto}`}
             </p>
-            <footer className="blockquote-footer">
-              Someone famous in <cite title="Source Title">Source Title</cite>
-            </footer>
           </blockquote>
         </Card.Body>
       </Card>
-      </div>
     );
     }
 }

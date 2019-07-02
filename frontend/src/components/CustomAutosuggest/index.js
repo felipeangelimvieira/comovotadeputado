@@ -43,10 +43,15 @@ class CustomAutosuggest extends Component {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
   
-    var suggestions = inputLength === 0 ? [] : this.state.congressmen.filter(x =>
-      x.nomeParlamentar.toLowerCase().slice(0, inputLength) === inputValue
-    );
-    return suggestions.slice(0,this.props.numItems)
+    if (this.state.congressmen !== undefined) {
+      var suggestions = inputLength === 0 ? [] : this.state.congressmen.filter(x =>
+        x.nomeParlamentar.toLowerCase().slice(0, inputLength) === inputValue
+      );
+      return suggestions.slice(0,this.props.numItems)
+    }
+    return [];
+    
+    
   }  
 
 
@@ -72,7 +77,8 @@ class CustomAutosuggest extends Component {
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-    
+    console.log('suggestion selected', suggestion.deputado_id)
+    this.props.onItemSelected(suggestion.deputado_id);
   }
 
   render() {

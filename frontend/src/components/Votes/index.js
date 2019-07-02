@@ -18,21 +18,52 @@ class Votes extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        votos : [],
-        loading : true
+        votes : [],
+        selectedCongressman : null,
+        loading : false
     }
 
     }
 
-    getVotos = async (deputado_id) => {
+    getVotes = async (deputado_id) => {
+        try {
+            this.setState({loading : true})
         var res = await requestVotes(deputado_id);
-        console.log("RESPONSE", res);
-        this.setState({ votos : res.data})
+        console.log(res.data)
+        this.setState({ votes : res.data,
+                        selectedCongressman : deputado_id,
+                        loading : false});
+        return 0
+}   
+ catch (e) {
+     console.log(e);
+     return e;
+ }
+
+}
+
+    getVotesAndCards = () =>
+    {
+
     }
 
     render() {
-        return <VoteCard/>;
-    }
+        console.log(this.state.votes, this.state.votes.length, this.props.selectedCongressman, this.state.selectedCongressman, this.state.loading);
+        
+        if ((this.props.selectedCongressman !== this.state.selectedCongressman  || this.state.votes.length === 0) && !this.state.loading)
+        { 
+            this.getVotes(this.props.selectedCongressman);
+        }
+
+        if (this.state.votes.length > 0 && this.props.selectedCongressman === this.state.selectedCongressman && !this.state.loading) {
+            return (
+                <div id="vote-list" style = {{textAlign: 'center'}}>
+                {this.state.votes.slice(0, 5).map((x,index) => <VoteCard vote={x} key={index}/>)}
+                </div>
+            )
+        }
+        return <VoteCard vote={null} />;
+        } 
 
 }
 

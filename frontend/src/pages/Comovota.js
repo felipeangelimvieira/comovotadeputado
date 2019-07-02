@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Autosuggest from '../components/CustomAutosuggest';
 import {Image} from 'react-bootstrap';
 import imagem_congresso from '../assets/imagem_congresso.jpg';
+import Votes from '../components/Votes';
 
 
 var background = { width: '100%',
@@ -18,9 +19,19 @@ var textStyle = {
 
 class Comovota extends Component {
 
-    state = {};
+    state = {
+        deputado_id : null
+    };
 
+    fetchVoteList = () => {
+        if (this.state.deputado_id) {
+            return (<Votes selectedCongressman={this.state.deputado_id}/>);
+        }
+    }
     
+    updateCongressman = (id) => {
+        this.setState({deputado_id : id})
+    }
 
     render() { return (<div style={{height: '100%'}}>
       
@@ -44,7 +55,8 @@ class Comovota extends Component {
               <div className="comovota-container" style = {{ margin: 0}}>
                   <h1 style={{fontFamily : "'Open Sans', sans-serif", margin: 0}}>Como vota,</h1>
                 <div className="autosuggest-container" style = {{display: 'flex', margin: 0, padding: 0}}>
-                  <Autosuggest numItems={5}/>
+                    
+                  <Autosuggest numItems={5} onItemSelected={this.updateCongressman}/>
                   <h1>?</h1>
                 </div>
               </div>
@@ -54,6 +66,7 @@ class Comovota extends Component {
         </div>
 
         <div className = "cards-container" style = {{textAlign : 'center'}}>
+            {this.fetchVoteList()}
         </div>
       </main>
 </div>)
