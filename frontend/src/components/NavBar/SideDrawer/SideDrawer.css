@@ -28,12 +28,12 @@
 }
 
 .side-drawer a {
-    color: #f67209;
+    color: #fff;
     text-decoration: none;
 }
 
 .side-drawer a:hover,
 .side-drawer a:active {
-    color: #fff;
+    color: #f4f802d8;
     text-decoration: none;
 }
