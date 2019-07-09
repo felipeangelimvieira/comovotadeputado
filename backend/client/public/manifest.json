@@ -9,7 +9,7 @@
     }
   ],
   "start_url": ".",
-  "homepage": "https://comovota.herokuapp.com/",
+  "homepage": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
