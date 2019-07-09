@@ -1,9 +1,10 @@
-//if (process.env.NODE_ENV === "production") {
-    const MONGODB_URL = process.env.MONGODB_URL;
-//}
-//else {
-//    const MONGODB_URL = require('../mongodb.config').url;
-//}
+var MONGODB_URL;
+if (process.env.NODE_ENV === "production") {
+    MONGODB_URL = process.env.MONGODB_URL;
+}
+else {
+    MONGODB_URL = require('../mongodb.config').url;
+}
 
 const mongoose = require('mongoose');
 const { getDataFromCongress } = require('../api-congresso/congress-data');
