@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function requestVotes(deputado_id) {
     return new Promise(function(resolve, reject) { 
-        axios.get(`http://localhost:3333/api/deputado/${deputado_id}/votos`)
+        axios.get(`https://comovota.herokuapp.com/api/deputado/${deputado_id}/votos`)
         .then((res) => resolve(res))
         .catch(res => reject(res));
 

@@ -32,7 +32,7 @@ class CustomAutosuggest extends Component {
   }
   
   componentDidMount() {
-    axios.get('http://localhost:3333/api/deputados')
+    axios.get('https://comovota.herokuapp.com/api/deputados')
     .then(response => {
       console.log("COMPONENT DID MOUNT", response)
       this.setState({congressmen : response.data})
