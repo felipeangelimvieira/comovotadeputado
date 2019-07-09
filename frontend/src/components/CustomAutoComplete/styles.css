@@ -1,0 +1,24 @@
+.input {
+    width: 15vw;
+    text-align: center;
+}
+
+.item {
+    align-content: center;
+}
+
+.menu {
+    min-height: 10vh;
+    max-height: 11vh;
+}
+
+.menu item-highlighted{
+    height: 10vw;
+    min-height: 10vh;
+    max-height: 1vh;
+}
+
+wrapper {
+    max-height: '5vh';
+}
+

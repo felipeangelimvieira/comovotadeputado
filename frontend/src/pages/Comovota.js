@@ -5,7 +5,10 @@ import imagem_congresso from '../assets/imagem_congresso.jpg';
 import Votes from '../components/Votes';
 import './comovota.css';
 
-var background = { width: '100%',
+var background = { 
+  width: '100%',
+                    height: '100vh',
+                    objectFit : 'cover',
                     backgroundSize: 'cover'};
 
 var textStyle = { 
@@ -13,8 +16,8 @@ var textStyle = {
   top: '13vw',
   textAlign : 'left',
   color: '#fff',
-  margin: '0 10% 0 10%',
-  fontSize : '4vw',
+  margin: '16vh 10% 0 10%',
+  fontSize : 'calc(30px + 2vw )',
 }
 
 
