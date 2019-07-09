@@ -36,7 +36,7 @@ async function mainServerAndClient() {
     app.use(cors());
     app.use(require('./routes'));
     
-    process.env.NODE_ENV = 'production';
+    //process.env.NODE_ENV = 'production';
 
     if (process.env.NODE_ENV === "production"){
 
