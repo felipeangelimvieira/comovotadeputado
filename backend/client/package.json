@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://comovota.herokuapp.com/",
   "dependencies": {
     "axios": "^0.19.0",
     "react": "^16.8.6",
