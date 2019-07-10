@@ -18,7 +18,6 @@ class Votes extends Component {
     constructor(props) {
     super(props);
 
-    console.log("PROPS", props)
     this.state = {
         votes : [],
         selectedCongressman : null,
