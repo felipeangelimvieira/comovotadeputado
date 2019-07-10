@@ -1,0 +1,9 @@
+.message {
+    font-family: 'Cabin', sans-serif;
+    font-size : calc(30px + 2vw );
+    position: absolute;
+    top: '13vw';
+    text-align : 'left';
+    color: '#fff';
+    margin: '16vh 10% 0 10%';
+}

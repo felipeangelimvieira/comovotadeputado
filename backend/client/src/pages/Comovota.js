@@ -4,6 +4,7 @@ import {Image} from 'react-bootstrap';
 import imagem_congresso from '../assets/imagem_congresso.jpg';
 import Votes from '../components/Votes';
 import './comovota.css';
+import styles from '../styles/typography.module.css';
 
 var background = { 
   width: '100%',
@@ -11,7 +12,8 @@ var background = {
                     objectFit : 'cover',
                     backgroundSize: 'cover'};
 
-var textStyle = { 
+var textStyle = {
+  fontFamily: "'Cabin', sans-serif",
   position: 'absolute',
   top: '13vw',
   textAlign : 'left',
@@ -79,7 +81,7 @@ class Comovota extends Component {
           <div className="input-container"style = {{marginTop : '3vw', textAlign: 'center'}}>
             <div className = "centered-container" style= {{display: 'inline-block'}}>
               <div className="comovota-container" style = {{ margin: 0}}>
-                  <h1 style={{fontFamily : "'Open Sans', sans-serif", margin: 0}}>Como vota,</h1>
+                  <h1 className={styles.h3}>Como vota,</h1>
                 <div className="autosuggest-container" style = {{display: 'flex', margin: 0, padding: 0}}>
                   <Autosuggest onItemSelected={this.updateCongressman}/>
                   <h1>?</h1>
