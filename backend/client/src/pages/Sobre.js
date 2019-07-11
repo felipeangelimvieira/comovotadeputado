@@ -1,5 +1,5 @@
 import React from 'react';
-import './Sobre.css'
+import '../styles/Sobre.css'
 
 export default class Sobre extends React.Component {
 

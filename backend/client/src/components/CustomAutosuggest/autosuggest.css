@@ -1,17 +1,16 @@
 .react-autosuggest__container {
-    position: relative;
+  
     padding-left: 1rem;
-    align-content: center;
   }
   
   .react-autosuggest__input {
-    
-    display: inline-block;
+    vertical-align: middle;
+    top: 50%;
     text-align: center;
-    width: 25rem;
+    width: calc(15rem + 2vw);
     height: 30px;
     padding: 1.4rem 2rem 0 2rem;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Cabin', sans-serif;
     font-weight: 300;
     font-size: 1rem;
     border: 0px solid #aaa;
@@ -35,14 +34,15 @@
   }
   
   .react-autosuggest__suggestions-container {
-    position: absolute;
+    
     align-content: center;
 
   }
   
   .react-autosuggest__suggestions-container--open {
-    top: 51px;
-    width: 29rem;
+    position: relative;
+    top: 1px;
+    width: (25rem + 2vw);
     border: 1px solid #aaa;
     background-color: #fff;
     font-family: 'Open Sans', sans-serif;

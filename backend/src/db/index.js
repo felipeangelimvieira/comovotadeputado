@@ -21,7 +21,7 @@ async function connect() {
 
     await connectionIsOpen();
     
-    //await mongoose.connection.dropDatabase();
+    await mongoose.connection.dropDatabase();
     //console.log(await Proposicao.find({}));
 
     if ((await getCollections()).length == 0) 

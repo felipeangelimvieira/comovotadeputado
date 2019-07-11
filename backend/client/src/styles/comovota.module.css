@@ -1,0 +1,32 @@
+.message {
+    font-family: 'Cabin', sans-serif;
+    font-size : calc(14px + 1.5vw);
+}
+
+.autosuggestQuestionContainer {
+    
+    display: inline-flex;
+
+}
+
+.questionMark {
+    margin-top: 15px;
+    vertical-align: top;
+    text-align: top;   
+}
+
+.button{
+    font-family: 'Cabin', sans-serif;
+    font-size: 1.5rem;
+    vertical-align: middle;
+    background-color: #fff;
+    border : 1px solid #aaa;
+    border-radius: 8px;
+    color: #888;
+}
+
+.button:hover{
+    background-color: rgba(243, 225, 62, 0.5);
+    color: #000;
+    cursor: pointer;
+    }
