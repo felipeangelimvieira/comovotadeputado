@@ -15,7 +15,8 @@ var sessaoSchema = new Schema({
 });
 
 var votacaoSchema = new Schema(
-{   sigla : String,
+{   proposicao_id: Number,
+    sigla : String,
     numero : Number,
     ano : Number,
     sessoes : [sessaoSchema]}, { collection: 'Votacoes' });

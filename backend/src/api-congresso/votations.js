@@ -4,6 +4,9 @@ xmlParser = new xml2js.Parser();
 xmlParser.on('error', err => console.log('Parser error', err));
 const endpoint = 'https://www.camara.leg.br/SitCamaraWS/Proposicoes.asmx/ObterVotacaoProposicao?';
 
+
+var propIds;
+
 async function getVotationForPropositions(propositions) {
 
     promises = propositions.map(prop => 
@@ -17,7 +20,8 @@ async function getVotationForPropositions(propositions) {
 
             return https.get(url);
         });
-
+    
+    propIds = propositions.map( prop => prop.proposicao_id );
     all_requests = Promise.all(promises);
     return parseData(await all_requests);
 }
@@ -29,7 +33,7 @@ async function getVotationForPropositions(propositions) {
 function parseData(data){
     
 
-    return Promise.all(data.map(convertToJson)).then(x=>x.map(formatVotes));
+    return Promise.all(data.map(convertToJson)).then(x=>x.map((votes, i) => formatVotes(votes,i)));
     
     };
 
@@ -45,7 +49,7 @@ function convertToJson(string) {
     });
 }
 
-function formatVotes(proposition) {
+function formatVotes(proposition, index) {
 
     proposicao = proposition.proposicao;
 
@@ -77,6 +81,7 @@ function formatVotes(proposition) {
     }
 
     proposicao_parsed = {
+        proposicao_id: propIds[index],
         sigla : proposicao.Sigla[0],
         numero : proposicao.Numero[0],
         ano : proposicao.Ano[0],
