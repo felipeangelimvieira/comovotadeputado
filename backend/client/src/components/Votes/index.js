@@ -4,8 +4,15 @@ import axios from 'axios';
 
 
 function requestVotes(deputado_id) {
-    return new Promise(function(resolve, reject) { 
-        axios.get(`https://comovota.herokuapp.com/api/deputado/${deputado_id}/votos`)
+    return new Promise(function(resolve, reject) {
+
+        var url;
+        url = `http://localhost:3333/api/deputado/${deputado_id}/votos`
+        if (process.env.NODE_ENV === "production"){
+            url = `https://comovota.herokuapp.com/api/deputado/${deputado_id}/votos`
+        }
+        
+        axios.get(url)
         .then((res) => resolve(res))
         .catch(res => reject(res));
 
