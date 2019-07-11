@@ -4,6 +4,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
 import clsx from 'clsx'
 import styles from '../../../styles/votecard.module.css';
 
@@ -57,7 +60,7 @@ class VoteCard extends Component {
     const tema = detalhes.tema
     const ementa = detalhes.ementa
     const link = detalhes.link
-    const linkCamara = `https://www.camara.leg.br/propostas-legislativas/${number}`;
+    const linkCamara = `https://www.camara.leg.br/propostas-legislativas/${detalhes.proposicao_id}`;
 
 
     return (
@@ -82,8 +85,17 @@ class VoteCard extends Component {
       </Collapse>
       <p className={styles.objetivo}>{objetivo}</p>
       <p className={styles.voto}>{voto}</p>
-        
       </CardContent>
+
+      
+      <CardActions>
+        <a href={linkCamara}>
+        <Button size="medium" color="primary">
+          Saiba mais
+        </Button>
+        </a>
+      </CardActions>
+    
     </Card>
     
     
