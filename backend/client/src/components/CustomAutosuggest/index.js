@@ -34,7 +34,7 @@ class CustomAutosuggest extends Component {
   componentDidMount() {
 
     var url;
-    url = `http://localhost:3333/api/deputado/deputados`
+    url = `http://localhost:3333/api/deputados`
     if (process.env.NODE_ENV === "production"){
         url = `https://comovota.herokuapp.com/api/deputados`
     }
