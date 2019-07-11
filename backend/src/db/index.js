@@ -21,7 +21,7 @@ async function connect() {
 
     await connectionIsOpen();
     
-    await mongoose.connection.dropDatabase();
+    //await mongoose.connection.dropDatabase();
     //console.log(await Proposicao.find({}));
 
     if ((await getCollections()).length == 0) 
@@ -133,11 +133,59 @@ function insertVotationIfNotExists(votation) {
 
         Votacao.findOneAndUpdate({sigla : votation.sigla,
             ano : votation.ano,
+           numero : votation.numero}, votation, {upsert : true, new: true},
+           (err, doc, res) => {
+               if (err) {
+                   console.log(err);
+                   reject(err);
+               }
+               else{
+                   resolve(1);
+               }
+           });
+});}
+    
+
+/*
+function insertVotationIfNotExists2(votation) {
+    return new Promise(function(resolve, reject) {
+
+        Votacao.findOne({sigla : votation.sigla,
+            ano : votation.ano,
            numero : votation.numero},
-           {'$set' : {'sessoes' : votation.sessoes}}, {},
             (err, doc) => {
                 if (!err) {
-                    resolve(1);
+                    
+                    if ((doc.sessoes.length == votation.sessoes.length) && doc) 
+                    {
+                        resolve(0)
+                    }
+                    else if (doc) {
+                    
+                    Votacao.findOneAndUpdate({sigla : votation.sigla,
+                        ano : votation.ano,
+                       numero : votation.numero}, { $set : {sessoes : votation.sessoes}},
+                       {}, (err, doc, res) => {
+                           if (err){
+                               console.log(err);
+                               reject(err);
+                           }
+                           else{
+                            resolve(1);
+                           }
+                       });
+                    }
+
+                    else {
+                        let instance = new Votacao(votation);
+                        instance.save( (err, res) => {
+                        if (err) {
+                            console.log(err);
+                            reject(err);
+                        }
+                        resolve(1);
+                        });
+                    }
                 }
                 else{
                     reject(err);
@@ -145,37 +193,9 @@ function insertVotationIfNotExists(votation) {
            });
 
 
-        query = Votacao.where({sigla : votation.sigla,
-                             ano : votation.ano,
-                            numero : votation.numero});
-        query.findOneAndUpdate((err, res) => {
-            if (!err) 
-            {
-                if (!res) 
-                {
-                    let instance = new Votacao(votation);
-                    instance.save( (err, res) => {
-                    if (err) {
-                        console.log(err);
-                        reject(err);
-                    }
-                    resolve(1);
-                    });
-                }
-                else{
-                resolve(0);
-                }
-            }
+})}
 
-            else
-            {
-                console.log(err);
-                reject(err)
-            }
-    });
-    });
-}
-
+*/
 function insertCongressmanIfNotExists(congressman) {
     return new Promise(function(resolve, reject) { 
         query = Deputado.where({deputado_id : congressman.deputado_id});
@@ -241,4 +261,5 @@ function toCamelCase(string) {
 
 module.exports = {
     connect : connect,
+    checkAndUpdateDatabase : checkAndUpdateDatabase,
 }
