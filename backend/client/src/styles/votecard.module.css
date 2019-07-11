@@ -1,0 +1,57 @@
+.card {
+
+    margin: 5vh 0 0 0;
+    width: calc(100px + 50vw);
+}
+
+.tema {
+    margin-top: 0;
+    text-align: left;
+    font-size : calc(10px + 1vw);
+    font-family: 'Cabin', sans-serif;
+    color: #b5b5b5;
+}
+
+.nome {
+    margin-bottom: 1vh;
+    font-size : calc(15px + 1vw);
+    font-family: 'Cabin', sans-serif;
+}
+
+.autor {
+    font-size : calc(7px + 1vw);
+    font-family: 'Cabin', sans-serif;
+}
+
+.explicacao {
+    font-size : calc(7px + 1vw);
+    font-family: 'Cabin', sans-serif;
+}
+
+.ementa {
+    text-align: left;
+    font-size : calc(12px + 0.5vw);
+    font-family: 'Cabin', sans-serif;
+}
+
+.voto {
+    font-size : calc(7px + 1vw);
+    font-family: 'Cabin', sans-serif;
+}
+
+.objetivo {
+    margin-top: 0;
+    text-align: center;
+    font-size : calc(5px + 0.8vw);
+    font-family: 'Cabin', sans-serif;
+    color: #a1a1a1
+}
+
+.expand {
+    transform: rotate(0deg);
+    margin-left: auto;
+}
+
+.expandOpen {
+    transform: rotate(180deg);
+}

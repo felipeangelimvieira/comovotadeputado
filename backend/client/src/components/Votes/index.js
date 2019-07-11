@@ -7,9 +7,9 @@ function requestVotes(deputado_id) {
     return new Promise(function(resolve, reject) {
 
         var url;
-        url = `http://localhost:3333/api/deputado/${deputado_id}/votos`
+        url = `http://localhost:3333/api/deputado/${deputado_id}/votosDetalhes`
         if (process.env.NODE_ENV === "production"){
-            url = `https://comovota.herokuapp.com/api/deputado/${deputado_id}/votos`
+            url = `https://comovota.herokuapp.com/api/deputado/${deputado_id}/votosDetalhes`
         }
         
         axios.get(url)
