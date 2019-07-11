@@ -10,6 +10,8 @@ routes.get('/api/deputados', congressmanController.getCongressmen);
 //routes.get('/deputados/:id', congressmanController.getCongressman);
 
 routes.get('/api/deputado/:id/votos/', votationController.getVotes);
+
+routes.get('/api/deputado/:id/votosDetalhes/', votationController.getVotesAndPropositionDetails);
 //routes.get('/votacoes/', );
 
 //routes.get('/proposicoes', propositionController);

@@ -18,5 +18,12 @@ module.exports = {
             console.log(doc);
         res.send(doc)
         }
-    });}
+    });},
+
+    getVotesAndPropositionDetails : (req, res, next) => {
+
+        let id = parseInt(req.params.id);
+
+    }
+
 }
