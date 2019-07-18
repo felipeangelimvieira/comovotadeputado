@@ -19,7 +19,7 @@ mainServerAndClient()
 async function main() {
     const app = express();
 
-    await db.connect();
+    await db.connect( );
 
     app.use(cors());
     app.use(require('./routes'));
@@ -51,9 +51,11 @@ async function mainServerAndClient() {
     }
     
     const port = process.env.PORT || 3333;
-    app.listen(port, () => console.log(`Server started on port ${port}`));
+    app.listen(port, () => {
+        db.checkAndUpdateDatabase()    
+        console.log(`Server started on port ${port}`)});
     
-
+    
     var rule = new schedule.RecurrenceRule;
     rule.hour = 24;
     schedule.scheduleJob(rule, async () => {

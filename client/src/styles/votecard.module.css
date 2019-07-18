@@ -6,6 +6,7 @@
 
 .tema {
     margin-top: 0;
+    margin-bottom: 0;
     text-align: left;
     font-size : calc(10px + 1vw);
     font-family: 'Cabin', sans-serif;
@@ -54,4 +55,12 @@
 
 .expandOpen {
     transform: rotate(180deg);
+}
+
+.data {
+    margin-top: 0;
+    text-align: left;
+    font-size : calc(8px + 0.5vw);
+    font-family: 'Cabin', sans-serif;
+    color: #b5b5b5;
 }

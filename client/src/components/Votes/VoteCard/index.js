@@ -69,6 +69,7 @@ class VoteCard extends Component {
 
       <CardContent>
       <p className={styles.tema}>{tema}</p>
+      <p className={styles.data}>{data}</p>
       <p className={styles.nome}>{`${type} ${number}/${year}`}</p>
       <IconButton
           className={this.state.expanded ? styles.expandOpen : styles.expand}

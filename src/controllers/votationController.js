@@ -33,6 +33,30 @@ module.exports = {
              localField : "proposicao_id",
              foreignField: "proposicao_id",
              as: "detalhes"
+            }},
+        {$sort: {"sessoes.sessao_id" : -1}}], (err, doc) => {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            console.log(doc);
+        res.send(doc)
+        }
+    });
+    },
+
+    getAllVotesAndPropositionDetails : (req, res, next) => {
+
+        let id = parseInt(req.params.id);
+        
+        Votacao.aggregate([
+            {$unwind : "$sessoes"},
+            {$unwind : "$sessoes.votos"},
+            {$lookup: {
+             from: "Proposicoes",
+             localField : "proposicao_id",
+             foreignField: "proposicao_id",
+             as: "detalhes"
             }}], (err, doc) => {
         if (err) {
             res.send(err);
@@ -43,5 +67,7 @@ module.exports = {
         }
     });
     }
+
+    
 
 }

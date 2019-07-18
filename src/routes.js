@@ -12,6 +12,8 @@ routes.get('/api/deputados', congressmanController.getCongressmen);
 routes.get('/api/deputado/:id/votos/', votationController.getVotes);
 
 routes.get('/api/deputado/:id/votosDetalhes/', votationController.getVotesAndPropositionDetails);
+
+routes.get('/api/all/votosDetalhes/', votationController.getAllVotesAndPropositionDetails);
 //routes.get('/votacoes/', );
 
 //routes.get('/proposicoes', propositionController);
